@@ -1,0 +1,4 @@
+set selection-clipboard clipboard
+set highlight-color "#A10C00"
+set highlight-active-color "#0E028D"
+set highlight-transparency 0.3

@@ -1,0 +1,17 @@
+aerc/.config/aerc/accounts.conf
+
+newsboat/.config/newsboat/cache.db*
+
+nvim/.config/nvim/.netrwhist
+nvim/.config/nvim/plugged/*
+nvim/.config/nvim/ftplugin/*
+
+polybar/.config/polybar/gmail/credentials.json
+
+tmux/.config/tmux/plugins/tmux-sensible/
+
+zsh/.config/antigen/
+zsh/.config/**/.zcompdump
+zsh/.config/**/*.zwc
+zsh/.config/zsh/history
+zsh/.fzf/
