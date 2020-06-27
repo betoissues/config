@@ -1,14 +1,16 @@
 https://www.uninformativ.de/blog/feeds/en.atom freedom
-https://drewdevault.com/feed.xml "~Drew"
+https://drewdevault.com/feed.xml oss "~Drew"
 http://www.saminiir.com/feed
 https://decentralize.today/feed freedom
-http://blog.z3bra.org/rss/feed.xml nixers "~z3bra's blog"
+http://blog.z3bra.org/rss/feed.xml nixers oss "~z3bra's blog"
 http://feeds.xero.nu/atom/blog/newest nixers "~xero's blog"
 https://venam.nixers.net/blog/feed.xml nixers "~venam's blog"
 https://theintercept.com/feed/?lang=en "~The Intercept"
-https://github.com/blog/engineering.atom "~GH Engineering"
-https://www.albertocastillog.com/rss.xml "~Blog Personal"
+https://www.betoissues.com/rss.xml "~Blog Personal"
 https://nilsschulte.de/posts/rss.xml
 https://desu.blog/feed/
 https://mochiro.moe/rss.xml
 https://blog.sasach.work/feed
+https://oscarbenedito.com/blog/index.xml oss
+https://fribbledom.com/posts/index.xml oss
+https://hosakacorp.net/rss.xml
