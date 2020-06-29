@@ -42,6 +42,7 @@ static const uint8_t borders[] = {4,6,3,5};
 static const char *ignore_names[] = {"bar", "xclock", "polybar"};
 ///--Menus and Programs---///
 static const char *rofiLaunch[]   = { "rofi", "-show", "run", NULL };
+static const char *rofiSSH[]   = { "rofi", "-show", "ssh", NULL };
 static const char *rofiWin[]   = { "rofi", "-show", "window", NULL };
 static const char *rofiDesktop[]   = { "rofi", "-show", "drun", "-show-icons", NULL };
 static const char *printGui[]   = { "flameshot", "gui", NULL };
@@ -194,6 +195,7 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_Left,       cursor_move,       {.i=TWOBWM_CURSOR_LEFT}},
     // Start programs
     {  MOD ,              XK_w,          start,             {.com = rofiDesktop}},
+    {  MOD ,              XK_s,          start,             {.com = rofiSSH}},
     {  MOD|SHIFT ,              XK_w,          start,             {.com = rofiWin}},
     {  MOD|SHIFT ,              XK_o,          start,             {.com = rofiLaunch}},
     {  MOD ,              XK_Return,          start,             {.com = terminal}},
@@ -225,7 +227,7 @@ static key keys[] = {
 static Button buttons[] = {
     {  MOD        ,XCB_BUTTON_INDEX_1,     mousemotion,   {.i=TWOBWM_MOVE}, false},
     {  MOD        ,XCB_BUTTON_INDEX_3,     mousemotion,   {.i=TWOBWM_RESIZE}, false},
-    {  0          ,XCB_BUTTON_INDEX_3,     start,         {.com = rofiLaunch}, true},
+    {  0          ,XCB_BUTTON_INDEX_3,     start,         {.com = rofiDesktop}, true},
     {  MOD|SHIFT,  XCB_BUTTON_INDEX_1,     changeworkspace, {.i=0}, false},
     {  MOD|SHIFT,  XCB_BUTTON_INDEX_3,     changeworkspace, {.i=1}, false},
     {  MOD|ALT,    XCB_BUTTON_INDEX_1,     changescreen,    {.i=1}, false},
