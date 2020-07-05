@@ -10,6 +10,9 @@ polybar/.config/polybar/gmail/credentials.json
 
 tmux/.config/tmux/plugins/tmux-sensible/
 
+vdirsyncer/.config/vdirsyncer/status/*
+vdirsyncer/.config/vdirsyncer/auth
+
 zsh/.config/antigen/
 zsh/.config/**/.zcompdump
 zsh/.config/**/*.zwc
