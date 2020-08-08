@@ -11,10 +11,15 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 source /usr/share/zsh/share/antigen.zsh
 antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle Tarrasch/zsh-autoenv
 antigen use oh-my-zsh
-antigen bundle git
+antigen bundle cargo
+antigen bundle docker
+antigen bundle dotenv
 antigen bundle fzf
+antigen bundle git
+antigen bundle sudo
 antigen theme $XDG_CONFIG_HOME/zsh/themes --no-local-clone
 antigen apply
 
