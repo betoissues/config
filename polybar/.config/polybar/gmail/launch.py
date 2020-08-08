@@ -57,6 +57,7 @@ while True:
         else:
             print_count(count_was, True)
         time.sleep(5)
-    except (ServerNotFoundError, OSError):
+    except (ServerNotFoundError, OSError) as e:
+        print(error_prefix + str(e), flush=True)
         print_count(count_was, True)
         time.sleep(5)

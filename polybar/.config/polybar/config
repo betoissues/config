@@ -29,13 +29,13 @@ line-size = 2
 padding = 1
 module-margin = 1
 
-font-0 = "Fira Code Medium:size=10;1"
-font-1 = "Material Design Icons:scale=1;size=10;1"
-font-2 = "WenQuanYi Zen Hei Mono:size=10;1"
-font-3 = "Noto Sans Symbols2:size=10;1"
+font-0 = "Fira Code:style=Medium:size=10"
+font-1 = "Symbols Nerd Font:size=12;0.9"
+font-2 = "cryptocoins:size=12;0.9"
+font-3 = "WenQuanYi Zen Hei Mono:size=10;1"
 
 modules-left = gmail spotify
-modules-center = 
+modules-center = eth xrp aapl nio
 modules-right = network pulseaudio date
 
 tray-position = right
@@ -60,7 +60,7 @@ layout-icon-1 = latam;la
 
 [module/gmail]
 type = custom/script
-exec = ~/.config/polybar/gmail/launch.py -ns -c '#fb4934' -p '✉️'
+exec = ~/.config/polybar/gmail/launch.py -ns -c '#fb4934' -p ''
 tail = true
 format-underline = ${colors.dark-yellow}
 click-left = xdg-open https://mail.google.com
@@ -76,16 +76,16 @@ type = internal/pulseaudio
 ; Default: true
 use-ui-max = true
 interval = 5
-label-muted = 🔇 muted
+label-muted =  muted
 label-muted-foreground = #666
 format-volume = <ramp-volume> <label-volume>
 format-volume-underline = ${colors.dark-yellow}
 format-muted-underline = ${colors.dark-red}
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 🔈
-ramp-volume-1 = 🔉
-ramp-volume-2 = 🔊
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 click-right = pavucontrol &
 
 [module/cpu]
@@ -100,8 +100,8 @@ label = %percentage:2%%
 type = internal/memory
 interval = 2
 format-prefix = "🗍 "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.dark-yellow}
 label = %percentage_used:2%%
 
 [module/network]
@@ -110,16 +110,16 @@ interface = enp39s0
 interval = 5.0
 
 format-connected-underline = ${colors.dark-yellow}
-label-connected = %upspeed% | %downspeed%
+label-connected =  %upspeed%  %downspeed%
 
 label-disconnected = ❎ not connected
 
 [module/spotify]
 type = custom/script
 interval = 1
-format-prefix = " "
+format-prefix = " "
 format = <label>
-exec = python ~/.config/polybar/spotify/spotify_status.py -f '{play_pause}{artist} - {song}' -p ',[paused] '
+exec = python ~/.config/polybar/spotify/spotify_status.py -f '{play_pause}{artist} - {song}' -p '[playing] ,[paused] '
 format-underline = ${colors.dark-yellow}
 
 [module/date]
@@ -205,6 +205,35 @@ ramp-capacity-foreground = ${colors.foreground-alt}
 label-charging = ⚡ %percentage%%
 label-discharging = %percentage%%
 label-full = " ☀ "
+
+[module/eth]
+type = custom/script
+exec = ~/.config/polybar/polystock/polystock.py --customticker ETH-USD
+tail = true
+label = %output%
+format-underline = #ffb52a
+
+[module/xrp]
+type = custom/script
+exec = ~/.config/polybar/polystock/polystock.py --customticker XRP-USD
+tail = true
+label = %output%
+format-underline = #ffb52a
+
+[module/aapl]
+type = custom/script
+exec = ~/.config/polybar/polystock/polystock.py --customticker AAPL
+tail = true
+label = %output%
+format-underline = #ffb52a
+
+[module/nio]
+type = custom/script
+exec = ~/.config/polybar/polystock/polystock.py --customticker NIO
+tail = true
+label = %output%
+format-underline = #ffb52a
+
 
 [settings]
 screenchange-reload = true
