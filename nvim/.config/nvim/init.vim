@@ -32,21 +32,23 @@ Plug 'rust-lang/rust.vim'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 Plug 'majutsushi/tagbar'
+Plug 'lvht/tagbar-markdown'
 Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'stanangeloff/php.vim'
 Plug 'mattn/emmet-vim'
 Plug 'chriskempson/base16-vim'
-
+Plug 'junegunn/goyo.vim'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 filetype plugin indent on
+syntax on
 set timeoutlen=300
 set encoding=utf-8
 set noshowmode
 set hidden
-set nowrap
 set nojoinspaces
 
 let mapleader = " "
@@ -95,6 +97,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 nnoremap <leader><leader> <c-^>
+nnoremap <leader>f :Goyo<CR>
 nnoremap <C-w> :bd<CR>
 
 "Line 80 mark
@@ -102,7 +105,10 @@ set tw=80
 set colorcolumn=+1
 highlight ColorColumn ctermbg=0
 
+set wrap
+set linebreak
 set wrapmargin=0
+set textwidth=0
 " Wrapping options
 set formatoptions=tc " wrap text and comments using textwidth
 set formatoptions+=r " continue comments when pressing ENTER in I mode
@@ -111,8 +117,6 @@ set formatoptions+=n " detect lists for formatting
 set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long
 
 set showcmd
-
-
 set laststatus=2
 
 " ==== GUI ====
