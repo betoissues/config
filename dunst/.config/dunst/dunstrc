@@ -61,7 +61,7 @@
 
 [shortcuts]
 
-    close = ctrl+space
+    close = ctrl+shift+l
     close_all = ctrl+shift+space
     context = ctrl+shift+period
 
