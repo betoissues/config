@@ -1,0 +1,49 @@
+Create Both
+Expunge Both
+Remove Both
+SyncState *
+
+# Gmail Setup
+IMAPAccount personal
+Host imap.gmail.com
+User email
+Pass pass
+SSLType IMAPS
+AuthMechs LOGIN
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore personal-remote
+Account personal
+
+MaildirStore personal-local
+SubFolders Verbatim
+Path ~/.mail/personal/
+Inbox ~/.mail/personal/Inbox
+
+Channel personal-inbox
+Master :personal-remote:
+Slave :personal-local:
+Patterns * ![Gmail]* !Trash !Sent !Drafts !Spam
+
+Channel personal-sent
+Master :personal-remote:"[Gmail]/Sent Mail"
+Slave :personal-local:Sent
+
+Channel personal-trash
+Master :personal-remote:"[Gmail]/Trash"
+Slave :personal-local:Trash
+
+Channel personal-drafts
+Master :personal-remote:"[Gmail]/Drafts"
+Slave :personal-local:Drafts
+
+Channel personal-spam
+Master :personal-remote:"[Gmail]/Spam"
+Slave :personal-local:Spam
+
+Group personal
+Channel personal-inbox
+Channel personal-sent
+Channel personal-trash
+Channel personal-drafts
+Channel personal-spam
