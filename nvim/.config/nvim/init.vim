@@ -29,8 +29,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'rust-lang/rust.vim'
 
 "" Python
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-
 Plug 'majutsushi/tagbar'
 Plug 'lvht/tagbar-markdown'
 Plug 'tomtom/tcomment_vim'
@@ -38,9 +36,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'stanangeloff/php.vim'
 Plug 'mattn/emmet-vim'
-Plug 'chriskempson/base16-vim'
 Plug 'junegunn/goyo.vim'
-Plug 'vimwiki/vimwiki'
 
 call plug#end()
 filetype plugin indent on
@@ -103,7 +99,7 @@ nnoremap <C-w> :bd<CR>
 "Line 80 mark
 set tw=80
 set colorcolumn=+1
-highlight ColorColumn ctermbg=0
+highlight ColorColumn ctermbg=241
 
 set wrap
 set linebreak
@@ -134,8 +130,8 @@ set diffopt+=iwhite
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 set shortmess+=c
-set nolist
-set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+set list
+set listchars=nbsp:¬,extends:»,precedes:«,trail:•,tab:>—
 
 
 " ==== MOVEMENT ====
@@ -170,6 +166,8 @@ autocmd FileType php setlocal tabstop=4 shiftwidth=4 expandtab
 set hidden
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['~/.local/bin/pyls'],
+    \ 'vue': ['~/.yarn/bin/vls'],
     \ }
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " set completeopt=noinsert,menuone,noselect
@@ -185,9 +183,6 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 
 let $FZF_DEFAULT_COMMAND = 'rg --files'
-
-" Python Mode
-let g:pymode_python = 'python3'
 
 map <C-p> :Files<CR>
 nmap <leader>; :Buffers<CR>

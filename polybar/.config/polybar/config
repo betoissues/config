@@ -1,13 +1,13 @@
 [colors]
-background = #1d2021
+background = #181818
 background-alt = #444
-foreground = #ebdbb2
+foreground = #d8d8d8
 foreground-alt = #888
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
-dark-red = #cc241d
-red = #fb4934
+dark-red = #ab4642
+red = #ab4642
 dark-yellow = #d79921
 yellow = #fabd2f
 
@@ -29,12 +29,12 @@ line-size = 3
 padding = 1
 module-margin = 1
 
-font-0 = "Fira Code:style=Medium:size=10"
-font-1 = "Symbols Nerd Font:size=12;0.9"
-font-2 = "cryptocoins:size=12;0.9"
-font-3 = "WenQuanYi Zen Hei Mono:size=10;1"
+font-0 = "Fira Code:style=Medium:size=11"
+font-1 = "Symbols Nerd Font:size=13;0.9"
+font-2 = "WenQuanYi Zen Hei Mono:size=11;1"
 
 modules-left = gmail spotify
+modules-center = ewmh
 modules-right = network pulseaudio date
 
 tray-position = right
@@ -61,13 +61,13 @@ layout-icon-1 = latam;la
 type = custom/script
 exec = ~/.config/polybar/gmail/launch.py -ns -c '#fb4934' -p ''
 tail = true
-format-underline = ${colors.dark-yellow}
-click-left = xdg-open https://mail.google.com
+format-underline = ${colors.red}
+click-left = ~/.local/bin/fm
 
 [module/pulseaudio]
 type = custom/script
 tail = true
-format-underline = ${colors.dark-yellow}
+format-underline = ${colors.red}
 
 exec = ~/.config/polybar/pulseaudio/pulseaudio-control.bash listen
 click-left = ~/.config/polybar/pulseaudio/pulseaudio-control.bash togmute
@@ -81,7 +81,7 @@ type = internal/network
 interface = enp39s0
 interval = 5.0
 
-format-connected-underline = ${colors.dark-yellow}
+format-connected-underline = ${colors.red}
 label-connected = " %upspeed%    %downspeed%"
 
 label-disconnected = ❎ not connected
@@ -93,7 +93,7 @@ format =  <label>
 exec = python ~/.config/polybar/spotify/spotify_status.py -f '{play_pause}{artist} - {song}' -p ',[paused] '
 click-left = playerctl play-pause
 click-right = spotify
-format-underline = ${colors.dark-yellow}
+format-underline = ${colors.red}
 
 [module/date]
 type = internal/date
@@ -106,7 +106,7 @@ time = %H:%M
 time-alt = %H:%M%
 
 format-prefix =
-format-underline = ${colors.dark-yellow}
+format-underline = ${colors.red}
 
 label = %date%%time%
 
@@ -176,6 +176,48 @@ ramp-capacity-foreground = ${colors.foreground-alt}
 label-charging = ⚡ %percentage%%
 label-discharging = %percentage%%
 label-full = " ☀ "
+
+[module/ewmh]
+type = internal/xworkspaces
+
+pin-workspaces = false 
+enable-click = true
+enable-scroll = true
+reverse-scroll = true
+
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+;icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
+icon-9 = 10;
+icon-default = ♟
+format = <label-state>
+label-monitor = %name%
+
+
+label-active = %icon%
+label-active-underline= ${colors.red}
+label-active-foreground = ##585858
+label-active-padding = 1
+
+label-occupied = %icon%
+label-occupied-foreground = ##585858
+label-occupied-padding = 1
+
+label-urgent = %icon%
+label-urgent-foreground = #585858
+;label-urgent-underline = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = 
+label-empty-foreground = #4F4F4F
+label-empty-padding = 1
 
 [settings]
 screenchange-reload = true

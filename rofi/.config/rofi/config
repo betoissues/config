@@ -1,3 +1,3 @@
-rofi.theme: ~/.config/rofi/themes/gruvbox/gruvbox-dark-hard.rasi
+rofi.theme: ~/.config/rofi/themes/base16/base16-default-dark.rasi
 rofi.modi: window,drun,ssh,run
 rofi.terminal: alacritty
