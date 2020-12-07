@@ -134,7 +134,7 @@ adapter = AC
 full-at = 98
 
 format-charging = <label-charging>
-format-charging-underline = #ffb52a
+format-charging-underline = ${colors.dark-red}
 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
@@ -142,15 +142,15 @@ format-discharging-underline = ${self.format-charging-underline}
 format-full = <label-full>
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = ⚋
-ramp-capacity-1 = ⚊
-ramp-capacity-2 = ⚍
-ramp-capacity-3 = ⚌
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
 ramp-capacity-foreground = ${colors.foreground}
 
-label-charging = ⚡ %percentage%%
+label-charging =  %percentage%%
 label-discharging = %percentage%%
-label-full = " ☀ "
+label-full = "  "
 
 [module/battery2]
 type = internal/battery
@@ -159,7 +159,7 @@ adapter = AC
 full-at = 98
 
 format-charging = <label-charging>
-format-charging-underline = #ffb52a
+format-charging-underline = ${colors.dark-red}
 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
@@ -167,15 +167,15 @@ format-discharging-underline = ${self.format-charging-underline}
 format-full = <label-full>
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = ⚋
-ramp-capacity-1 = ⚊
-ramp-capacity-2 = ⚍
-ramp-capacity-3 = ⚌
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-foreground = ${colors.foreground}
 
-label-charging = ⚡ %percentage%%
+label-charging =  %percentage%%
 label-discharging = %percentage%%
-label-full = " ☀ "
+label-full = "  "
 
 [module/ewmh]
 type = internal/xworkspaces
@@ -220,6 +220,6 @@ label-empty-foreground = #4F4F4F
 label-empty-padding = 1
 
 [settings]
-screenchange-reload = true
+screenchange-reload = false
 
 ; vim:ft=dosini
