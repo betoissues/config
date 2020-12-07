@@ -13,7 +13,7 @@
     padding = 16
     horizontal_padding = 16
     frame_width = 3
-    frame_color = "#d79921"
+    frame_color = "#f7ca88"
     separator_color = frame
 
     font = Fira Code 12

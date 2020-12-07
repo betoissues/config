@@ -59,7 +59,7 @@ layout-icon-1 = latam;la
 
 [module/gmail]
 type = custom/script
-exec = ~/.config/polybar/gmail/launch.py -ns -c '#fb4934' -p ''
+exec = ~/.config/polybar/gmail/launch.py -ns -c '#ab4642' -p ''
 tail = true
 format-underline = ${colors.red}
 click-left = ~/.local/bin/fm

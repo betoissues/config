@@ -1,14 +1,13 @@
 aerc/.config/aerc/accounts.conf
 
-newsboat/.config/newsboat/cache.db*
-
 nvim/.config/nvim/.netrwhist
 nvim/.config/nvim/plugged/*
+nvim/.config/nvim/plugin/
 nvim/.config/nvim/ftplugin/*
 
 polybar/.config/polybar/gmail/credentials.json
 
-tmux/.config/tmux/plugins/tmux-sensible/
+tmux/.config/tmux/plugins/*
 
 vdirsyncer/.config/vdirsyncer/status/*
 vdirsyncer/.config/vdirsyncer/auth
