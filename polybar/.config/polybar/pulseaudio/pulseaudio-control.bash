@@ -28,6 +28,7 @@ SINK_NICKNAMES["alsa_output.usb-Yamaha_Corporation_Steinberg_UR22mkII-00.analog-
 SINK_NICKNAMES["alsa_output.pci-0000_2d_00.1.hdmi-stereo-extra1"]="HDMI"
 SINK_NICKNAMES["alsa_output.pci-0000_00_1b.0.hdmi-stereo"]="HDMI"
 SINK_NICKNAMES["alsa_output.pci-0000_00_1b.0.analog-stereo"]="DEFAULT"
+SINK_NICKNAMES["alsa_output.pci-0000_00_1f.3.analog-stereo"]="DEFAULT"
 
 
 # Environment & global constants for the script

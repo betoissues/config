@@ -10,6 +10,7 @@ dark-red = #ab4642
 red = #ab4642
 dark-yellow = #d79921
 yellow = #fabd2f
+blue = #7cafc2
 
 [bar/main]
 monitor = ${env:MONITOR:HDMI-0}
@@ -20,6 +21,7 @@ fixed-center = true
 bottom = true
 override-redirect = true
 wm-restack = i3
+enable-ipc = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -33,9 +35,9 @@ font-0 = "Fira Code:style=Medium:size=11"
 font-1 = "Symbols Nerd Font:size=13;0.9"
 font-2 = "WenQuanYi Zen Hei Mono:size=11;1"
 
-modules-left = gmail spotify
+modules-left = gmail rs ixm spotify
 modules-center = ewmh
-modules-right = network pulseaudio date
+modules-right = network battery battery2 brightness pulseaudio date ipc-dunst
 
 tray-position = right
 tray-padding = 2
@@ -62,7 +64,18 @@ type = custom/script
 exec = ~/.config/polybar/gmail/launch.py -ns -c '#ab4642' -p ''
 tail = true
 format-underline = ${colors.red}
-click-left = ~/.local/bin/fm
+
+[module/rs]
+type = custom/script
+exec = ~/.config/polybar/gmail-rs/launch.py -ns -c '#7cafc2' -p ''
+tail = true
+format-underline = ${colors.blue}
+
+[module/ixm]
+type = custom/script
+exec = ~/.config/polybar/gmail-ixm/launch.py -ns -c '#ab4642' -p ''
+tail = true
+format-underline = ${colors.red}
 
 [module/pulseaudio]
 type = custom/script
@@ -78,13 +91,13 @@ label-foreground = ${colors.foreground}
 
 [module/network]
 type = internal/network
-interface = enp39s0
+interface = wlp3s0
 interval = 5.0
 
 format-connected-underline = ${colors.red}
-label-connected = " %upspeed%    %downspeed%"
+label-connected = "LAN: %upspeed% | %downspeed%"
 
-label-disconnected = ❎ not connected
+label-disconnected = 
 
 [module/spotify]
 type = custom/script
@@ -112,20 +125,10 @@ label = %date%%time%
 
 [module/brightness]
 type = internal/xbacklight
-
 enable-scroll = true
-format = <ramp> <label>
-
-label = %percentage%%
-
-; Only applies if <ramp> is used
-ramp-0 = 🌕
-ramp-1 = 🌔
-ramp-2 = 🌓
-ramp-3 = 🌒
-ramp-4 = 🌑
-
-format-underline = #ffb52a
+format = <label>
+label =  %percentage%%
+format-underline = ${colors.red}
 
 [module/battery]
 type = internal/battery
@@ -177,6 +180,14 @@ label-charging =  %percentage%%
 label-discharging = %percentage%%
 label-full = "  "
 
+[module/ipc-dunst]
+type = custom/ipc
+initial = 1
+hook-0 = echo "%{A1:notify-send "DUNST_COMMAND_PAUSE" && polybar-msg hook ipc-dunst 2:}%{A}" &
+hook-1 = echo "%{A1:notify-send "DUNST_COMMAND_RESUME" && polybar-msg hook ipc-dunst 1:}%{F#ab4642}%{F-}%{A}" &
+format-underline = ${colors.dark-red}
+
+
 [module/ewmh]
 type = internal/xworkspaces
 
@@ -190,24 +201,24 @@ icon-1 = 2;
 icon-2 = 3;
 ;icon-2 = 3;
 icon-3 = 4;
-icon-4 = 5;
-icon-5 = 6;
-icon-6 = 7;
-icon-7 = 8;
-icon-8 = 9;
+icon-4 = 5;
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;
+icon-8 = 9;
 icon-9 = 10;
-icon-default = ♟
+icon-default = 
 format = <label-state>
 label-monitor = %name%
 
 
 label-active = %icon%
 label-active-underline= ${colors.red}
-label-active-foreground = ##585858
+#label-active-foreground = #585858
 label-active-padding = 1
 
 label-occupied = %icon%
-label-occupied-foreground = ##585858
+label-occupied-foreground = #585858
 label-occupied-padding = 1
 
 label-urgent = %icon%
@@ -215,8 +226,8 @@ label-urgent-foreground = #585858
 ;label-urgent-underline = ${colors.alert}
 label-urgent-padding = 1
 
-label-empty = 
-label-empty-foreground = #4F4F4F
+label-empty = %icon%
+label-empty-foreground = #585858
 label-empty-padding = 1
 
 [settings]
