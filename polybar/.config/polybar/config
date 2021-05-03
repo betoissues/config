@@ -214,11 +214,11 @@ label-monitor = %name%
 
 label-active = %icon%
 label-active-underline= ${colors.red}
-#label-active-foreground = #585858
+;label-active-foreground = #585858
 label-active-padding = 1
 
 label-occupied = %icon%
-label-occupied-foreground = #585858
+;label-occupied-foreground = #585858
 label-occupied-padding = 1
 
 label-urgent = %icon%
@@ -227,7 +227,7 @@ label-urgent-foreground = #585858
 label-urgent-padding = 1
 
 label-empty = %icon%
-label-empty-foreground = #585858
+label-empty-foreground = #4F4F4F
 label-empty-padding = 1
 
 [settings]
