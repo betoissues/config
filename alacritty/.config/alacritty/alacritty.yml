@@ -8,9 +8,9 @@ window:
     lines: 24
 
   padding:
-    x: 2
-    y: 2
-  dynamic_padding: false
+    x: 6
+    y: 3
+  dynamic_padding: true
   decorations: none
 
 scrolling:
@@ -27,7 +27,7 @@ font:
   italic:
     family: Hack
     style: Italic
-  size: 12
+  size: 11
   offset:
     x: 0
     y: 0
@@ -53,7 +53,7 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
   hide_when_typing: false
-  url:
+  hints:
     launcher:
       program: xdg-open
       args: []
@@ -332,8 +332,8 @@ key_bindings:
 colors:
   # Default colors
   primary:
-    background: '#181818'
-    foreground: '#d8d8d8'
+    background: '#0f0f0f'
+    foreground: '#f0f0f0'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:

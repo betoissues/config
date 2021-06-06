@@ -13,7 +13,7 @@ AUTOSYNC="no"  # All programs have the same volume if enabled
 VOLUME_ICONS=( " " " " " " )  # Volume icons array, from lower volume to higher
 MUTED_ICON=" "  # Muted volume icon
 MUTED_COLOR="%{F#666666}"  # Color when the audio is muted
-NOTIFICATIONS="no"  # Notifications when switching sinks if enabled
+NOTIFICATIONS="yes"  # Notifications when switching sinks if enabled
 SINK_ICON=" "  # Icon always shown to the left of the default sink names
 
 # Blacklist of PulseAudio sink names when switching between them. To obtain
@@ -296,9 +296,9 @@ function output() {
 
     # Showing the formatted message
     if [ "$isMuted" = "yes" ]; then
-        echo "${MUTED_COLOR}${MUTED_ICON}${curVol}%   ${SINK_ICON}${nickname}${END_COLOR}"
+        echo "${MUTED_COLOR}${MUTED_ICON}${END_COLOR}"
     else
-        echo "${volIcon}${curVol}%   ${SINK_ICON}${nickname}"
+        echo "${volIcon}"
     fi
 }
 

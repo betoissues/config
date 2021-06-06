@@ -1,0 +1,5 @@
+configuration {
+	modi: "window,drun,ssh,run";
+	terminal: "alacritty";
+	theme: "~/.config/rofi/themes/base16/base16-default-dark.rasi";
+}

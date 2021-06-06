@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=XSession
+Exec=env KDEWM=/usr/local/bin/startdwm /usr/bin/startplasma-x11
+DesktopNames=KDE
+Name=Plasma (dwm)
