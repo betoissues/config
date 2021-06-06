@@ -15,7 +15,7 @@ static const unsigned int gappov    = 30;        /* vert outer gap between windo
 static const int focusonwheel       = 0;         /* don't focus on mwheel event */
 static const int usealtbar          = 1;         /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
-static const char *alttrayname      = "tray";    /* Polybar tray instance name */
+static const char *alttrayname      = "stalonetray";    /* Polybar tray instance name */
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -52,6 +52,7 @@ static const Rule rules[] = {
 //	{  NULL,       NULL,   "spmusic",  SPTAG(1),     1,           1,        0,          -1},
 //	{  NULL,       NULL,   "splf",     SPTAG(2),     1,           1,        0,          -1},
 	{  NULL,       NULL,   "Alacritty",0,            0,           1,        0,          -1},
+	{  NULL,       NULL,   "stalonetray",1<<8,            0,           0,        0,          -1},
 };
 
 #include "vanitygaps.c"
