@@ -81,18 +81,25 @@ label-foreground = ${colors.foreground}
 
 [module/network]
 type = internal/network
-interface = wlp3s0
+interface = wlp37s0
 interval = 5.0
 label-connected =  %essid%
 label-disconnected = 
 
 [module/spotify]
 type = custom/script
+format-margin = 0
+format = <label>
+exec = playerctl metadata --format ' {{artist}}: {{title}}'
+tail = true
 interval = 1
-format =  <label>
-exec = python ~/.config/polybar/spotify/spotify_status.py -f '{play_pause}{artist} - {song}' -p ',[paused] '
-click-left = playerctl play-pause
-click-right = spotify
+click-left = "playerctl play-pause"
+;type = custom/script
+;interval = 1
+;format =  <label>
+;exec = python ~/.config/polybar/spotify/spotify_status.py -f '{play_pause}{artist} - {song}' -p ',[paused] '
+;click-left = playerctl play-pause
+;click-right = spotify
 
 [module/date]
 type = internal/date
