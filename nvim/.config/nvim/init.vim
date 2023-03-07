@@ -134,7 +134,7 @@ set scrolloff=10
 		local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 		local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 		buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-		require('completion').on_attach()
+		require('lsp_signature').on_attach()
 		local opts = { noremap=true, silent=true }
 		buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 		buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -156,7 +156,7 @@ set scrolloff=10
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		nvim_lsp[lsp].setup {
 			on_attach = on_attach,
-			capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+			capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
 		}
 	end
 	require('cmp').setup {
