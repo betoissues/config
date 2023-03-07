@@ -9,10 +9,17 @@ call plug#begin('~/.config/nvim/plugged')
 "" General
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
-Plug 'airblade/vim-gitgutter'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'Yggdroot/indentLine'
+Plug 'nvim-lualine/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
+Plug 'kyazdani42/nvim-web-devicons'
+
+"" GIT
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim', { 'branch': 'main' }
 
 "" Fuzzy finder
 Plug 'airblade/vim-rooter'
@@ -21,24 +28,20 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 
-"" NCM2
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'subnut/ncm2-github-emoji'
-
-"" Snippets Support
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"" Completion
+Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-path', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
+Plug 'hrsh7th/cmp-emoji', { 'branch': 'main' }
+Plug 'andersevenrud/cmp-tmux', { 'branch': 'main' }
+Plug 'ray-x/lsp_signature.nvim'
 
 "" Language Support
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
-
-"" Rust
+Plug 'tpope/vim-commentary'
+Plug 'hashivim/vim-terraform'
 Plug 'rust-lang/rust.vim'
 
 call plug#end()
@@ -94,10 +97,6 @@ set laststatus=2
 
 set switchbuf=useopen signcolumn=yes noshowcmd inccommand=split
 set undodir=~/.local/share/nvim/undodir undofile
-let g:completion_confirm_key = "\<C-y>"
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_matching_smart_case = 1
-let g:completion_trigger_on_delete = 1
 
 if executable('rg')
         set grepprg=rg\ --no-heading\ --vimgrep
@@ -152,18 +151,33 @@ set scrolloff=10
 			buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 		end
 	end
-	local servers = {'rust_analyzer', 'pyls', 'gopls', 'html', 'intelephense', 'clangd'}
+	local servers = {'rust_analyzer', 'pylsp', 'gopls', 'html', 'intelephense', 'clangd', 'terraform-ls'}
 	for _, lsp in ipairs(servers) do
+		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		nvim_lsp[lsp].setup {
 			on_attach = on_attach,
+			capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 		}
 	end
+	require('cmp').setup {
+		sources = {
+			{ name = 'nvim_lsp' },
+			{ name = 'path' },
+			{ name = 'buffer' },
+			{ name = 'emoji' },
+			{ name = 'tmux' },
+		}
+	}
+	require('gitsigns').setup()
+	require('lualine').setup {
+	options = {
+		theme = 'ayu_dark'
+		}
+	}
 EOF 
 
 let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_virtual_text_prefix = ''
-autocmd BufEnter * call ncm2#enable_for_buffer()
-au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect shm+=c
 
 " ===== FILETYPE SUPPORT =====
 autocmd BufEnter * silent! cd %:p:h
@@ -219,16 +233,6 @@ nmap <leader>; :Buffers<CR>
 nmap <leader>t :TagbarToggle<CR>
 map <C-tab> :bn
 map <C-p> :Files<CR>
-
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
-inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
-" c-j c-k for moving in snippet
-" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger	= "<c-b>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-z>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
 
 let &t_8f = "<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "<Esc>[48;2;%lu;%lu;%lum"
