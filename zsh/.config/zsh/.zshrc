@@ -14,14 +14,14 @@ source /usr/share/zsh/share/antigen.zsh
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle Tarrasch/zsh-autoenv
-antigen use oh-my-zsh
+antigen use ohmyzsh/ohmyzsh
 antigen bundle cargo
 antigen bundle docker
 antigen bundle fzf
 antigen bundle git
 antigen bundle sudo
-antigen theme $XDG_CONFIG_HOME/zsh/themes --no-local-clone
 antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
+antigen theme $XDG_CONFIG_HOME/zsh/themes --no-local-clone
 antigen apply
 
 alias s="$XDG_CONFIG_HOME/tmux/tmux_session.sh"
@@ -42,4 +42,4 @@ alias rm="rm -Iv"
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source $XDG_CONFIG_HOME/cargo/env
+#source $XDG_CONFIG_HOME/cargo/env

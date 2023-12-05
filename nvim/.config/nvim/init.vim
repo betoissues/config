@@ -156,7 +156,7 @@ set scrolloff=10
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		nvim_lsp[lsp].setup {
 			on_attach = on_attach,
-			capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
+			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
 		}
 	end
 	require('cmp').setup {
