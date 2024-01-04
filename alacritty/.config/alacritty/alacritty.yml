@@ -1,7 +1,9 @@
-env:
-  TERM: xterm-256color
+# env:
+#   TERM: xterm-256color
 
 window:
+  option_as_alt: true
+  opacity: 1.0
   dynamic_title: true
   dimensions:
     columns: 80
@@ -11,7 +13,7 @@ window:
     x: 6
     y: 3
   dynamic_padding: true
-  decorations: none
+  decorations: Full
 
 scrolling:
   history: 10000
@@ -27,7 +29,7 @@ font:
   italic:
     family: Hack
     style: Italic
-  size: 11
+  size: 10
   offset:
     x: 0
     y: 0
@@ -35,7 +37,6 @@ font:
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: true
 
 draw_bold_text_with_bright_colors: true
 
@@ -44,20 +45,11 @@ bell:
   duration: 0
   color: '0xffffff'
 
-background_opacity: 1.0
-
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
 mouse:
-  double_click: { threshold: 300 }
-  triple_click: { threshold: 300 }
   hide_when_typing: false
-  hints:
-    launcher:
-      program: xdg-open
-      args: []
-    modifiers: None
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
@@ -69,11 +61,6 @@ cursor:
   vi_mode_style: Block
 
 live_config_reload: true
-
-enable_experimental_conpty_backend: false
-
-# Send ESC (\x1b) before characters when alt is pressed.
-alt_send_esc: true
 
 # Key bindings
 #
@@ -217,8 +204,8 @@ key_bindings:
   - { key: Insert,   mods: Shift,         action: PasteSelection   }
   - { key: Key0,     mods: Control,       action: ResetFontSize    }
   - { key: Equals,   mods: Control,       action: IncreaseFontSize }
-  - { key: Add,      mods: Control,       action: IncreaseFontSize }
-  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  - { key: Plus,      mods: Control,       action: IncreaseFontSize }
+  - { key: Minus, mods: Control,       action: DecreaseFontSize }
   - { key: Minus,    mods: Control,       action: DecreaseFontSize }
 
   - { key: Paste,                   action: Paste                            }
