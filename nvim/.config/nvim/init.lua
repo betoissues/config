@@ -15,25 +15,73 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {
-    	"nvim-neo-tree/neo-tree.nvim",
-    	branch = "v3.x",
-    	dependencies = {
-      		"nvim-lua/plenary.nvim",
-      		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      		"MunifTanjim/nui.nvim",
-    	}
+	'mfussenegger/nvim-lint',
+	{
+		'stevearc/conform.nvim',
+		opts = {},
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+		}
 	},
 	{
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x"
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		event = "VimEnter",
+		opts = {
+			indent = {
+				char = "│",
+				tab_char = "│",
+			},
+			scope = { enabled = false },
+			exclude = {
+				filetypes = {
+					"help",
+					"alpha",
+					"dashboard",
+					"neo-tree",
+					"Trouble",
+					"trouble",
+					"lazy",
+					"mason",
+					"notify",
+					"toggleterm",
+					"lazyterm",
+				},
+			},
+		},
+		main = "ibl",
+	},
+	-- Dashboard
+	{
+		'nvimdev/dashboard-nvim',
+		event = 'VimEnter',
+		config = function()
+			require('dashboard').setup {}
+		end,
+		dependencies = { 'nvim-tree/nvim-web-devicons' }
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		}
 	},
 	-- General
 	"majutsushi/tagbar",
 	"jiangmiao/auto-pairs",
 	"junegunn/goyo.vim",
 	"junegunn/vim-easy-align",
-	"lukas-reineke/indent-blankline.nvim",
 	"nvim-lualine/lualine.nvim",
 	"nvim-lua/plenary.nvim",
 	-- Git
@@ -47,20 +95,56 @@ local plugins = {
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-emoji",
 	"andersevenrud/cmp-tmux",
-	"ray-x/lsp_signature.nvim",
 	-- Language Support
+	"nvim-treesitter/nvim-treesitter",
 	"neovim/nvim-lspconfig",
 	"nvim-lua/completion-nvim",
-	"tpope/vim-commentary"
+	"tpope/vim-commentary",
+	-- Misc
+	"nvim-telescope/telescope-ui-select.nvim",
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {}
+	},
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	}
 }
 
 require("lazy").setup(plugins, {})
+
+require("noice").setup({
+	lsp = {
+		signature = {
+			enabled = true,
+		},
+		documentation = {
+			view = nil,
+			opts = {
+				lang = "markdown",
+				replace = true,
+				render = "plain",
+				format = { "{message}" },
+				win_options = { concealcursor = "n", conceallevel = 3 },
+			},
+		}
+	},
+	presets = {
+		command_palette = true, -- position the cmdline and popupmenu together
+		long_message_to_split = false, -- long messages will be sent to a split
+		lsp_doc_border = true
+	}
+})
+
+-- LSP Config
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-	require('lsp_signature').on_attach()
 	local opts = { noremap=true, silent=true }
 	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -69,7 +153,6 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 	buf_set_keymap('n', '<leader>xD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 	buf_set_keymap('n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	buf_set_keymap('n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
 	if client.resolved_capabilities.document_formatting then
 		buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
@@ -93,8 +176,6 @@ require'lspconfig'.lua_ls.setup {
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
           runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
             version = 'LuaJIT'
           },
           -- Make the server aware of Neovim runtime files
@@ -102,13 +183,7 @@ require'lspconfig'.lua_ls.setup {
             checkThirdParty = false,
             library = {
               vim.env.VIMRUNTIME
-              -- Depending on the usage, you might want to add additional paths here.
-              -- E.g.: For using `vim.*` functions, add vim.env.VIMRUNTIME/lua.
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
             }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
           }
         }
       })
@@ -117,38 +192,74 @@ require'lspconfig'.lua_ls.setup {
   end
 }
 
-require('cmp').setup {
+-- Completion Config
+local cmp = require('cmp')
+cmp.setup {
 	sources = {
 		{ name = 'nvim_lsp' },
 		{ name = 'path' },
 		{ name = 'buffer' },
 		{ name = 'emoji' },
 		{ name = 'tmux' },
+	},
+	mappings = {
+		["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+		["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<S-CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<C-CR>"] = function(fallback)
+			cmp.abort()
+			fallback()
+		end,
 	}
 }
+
 require('gitsigns').setup()
+
+-- Telescope Config
 local actions = require('telescope.actions')
 require('telescope').setup {
-    defaults = {
-      	mappings = {
-        	i = {
-          		["<esc>"] = actions.close,
-          		["<C-[>"] = actions.close,
-          		["<C-q>"] = actions.send_to_qflist,
-          	},
-        },
-    },
-}
-require('lualine').setup {
-	options = {
-		theme = 'ayu_dark'
+	defaults = {
+		mappings = {
+			i = {
+				["<esc>"] = actions.close,
+				["<C-[>"] = actions.close,
+				["<C-q>"] = actions.send_to_qflist,
+			},
+		},
+	},
+	extensions = {
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown {}
+		}
 	}
 }
+require("telescope").load_extension("ui-select")
+
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', 'gr', builtin.lsp_references, {})
+
+-- Lualine Config
+require('lualine').setup {
+	options = {
+		theme = 'auto',
+		extensions = { "neo-tree", "lazy" },
+		globalstatus = true,
+	}
+}
+
+require("ibl").setup()
 
 vim.opt.compatible = false
 --vim.cmd 'scriptencoding utf-8'
@@ -213,7 +324,6 @@ vim.opt.inccommand = "split"
 vim.opt.vb = true
 vim.opt.backspace = "2"
 vim.opt.foldenable = false
-vim.opt.lazyredraw = true
 vim.opt.synmaxcol = 500
 vim.opt.relativenumber = true
 vim.opt.diffopt:append("iwhite")
@@ -252,3 +362,4 @@ vim.api.nvim_set_keymap("n", "<C-tab>", ":bn<CR>", { noremap = true })
 
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
+
