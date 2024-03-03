@@ -17,8 +17,20 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	'mfussenegger/nvim-lint',
 	{
-		'stevearc/conform.nvim',
-		opts = {},
+		'linux-cultist/venv-selector.nvim',
+		dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim', 'mfussenegger/nvim-dap-python' },
+		opts = {
+			-- Your options go here
+			name = ".venv",
+			auto_refresh = true
+		},
+		event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+		keys = {
+			-- Keymap to open VenvSelector to pick a venv.
+			{ '<leader>vs', '<cmd>VenvSelect<cr>' },
+			-- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
+			{ '<leader>vc', '<cmd>VenvSelectCached<cr>' },
+		},
 	},
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -32,6 +44,12 @@ local plugins = {
 	{
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x"
+	},
+	{
+		'goolord/alpha-nvim',
+		config = function ()
+			require'alpha'.setup(require'alpha.themes.theta'.config)
+		end
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
@@ -60,15 +78,6 @@ local plugins = {
 		},
 		main = "ibl",
 	},
-	-- Dashboard
-	{
-		'nvimdev/dashboard-nvim',
-		event = 'VimEnter',
-		config = function()
-			require('dashboard').setup {}
-		end,
-		dependencies = { 'nvim-tree/nvim-web-devicons' }
-	},
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -86,8 +95,6 @@ local plugins = {
 	"nvim-lua/plenary.nvim",
 	-- Git
 	"lewis6991/gitsigns.nvim",
-	-- Fuzzy Finder
-	"airblade/vim-rooter",
 	-- Completion
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
@@ -116,22 +123,14 @@ local plugins = {
 
 require("lazy").setup(plugins, {})
 
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})
+
 require("noice").setup({
-	lsp = {
-		signature = {
-			enabled = true,
-		},
-		documentation = {
-			view = nil,
-			opts = {
-				lang = "markdown",
-				replace = true,
-				render = "plain",
-				format = { "{message}" },
-				win_options = { concealcursor = "n", conceallevel = 3 },
-			},
-		}
-	},
 	presets = {
 		command_palette = true, -- position the cmdline and popupmenu together
 		long_message_to_split = false, -- long messages will be sent to a split
@@ -139,58 +138,6 @@ require("noice").setup({
 	}
 })
 
--- LSP Config
-local nvim_lsp = require('lspconfig')
-local on_attach = function(client, bufnr)
-	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-	local opts = { noremap=true, silent=true }
-	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	buf_set_keymap('n', '<leader>xD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-	buf_set_keymap('n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	buf_set_keymap('n', '<leader>xd', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
-	if client.resolved_capabilities.document_formatting then
-		buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-	elseif client.resolved_capabilities.document_range_formatting then
-		buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-	end
-end
-local servers = {'rust_analyzer', 'pylsp', 'gopls', 'html', 'intelephense', 'clangd', 'terraform-ls'}
-for _, lsp in ipairs(servers) do
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	nvim_lsp[lsp].setup {
-		on_attach = on_attach,
-		capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
-	}
-end
-
-require'lspconfig'.lua_ls.setup {
-  on_init = function(client)
-    local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-        Lua = {
-          runtime = {
-            version = 'LuaJIT'
-          },
-          -- Make the server aware of Neovim runtime files
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              vim.env.VIMRUNTIME
-            }
-          }
-        }
-      })
-    end
-    return true
-  end
-}
 
 -- Completion Config
 local cmp = require('cmp')
@@ -244,6 +191,7 @@ require('telescope').setup {
 require("telescope").load_extension("ui-select")
 
 local builtin = require('telescope.builtin')
+builtin.diagnostics({ severity_bound = 0 })
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
@@ -256,13 +204,71 @@ require('lualine').setup {
 		theme = 'auto',
 		extensions = { "neo-tree", "lazy" },
 		globalstatus = true,
+		icons_enabled = true,
+		component_separators = '|',
+		section_separators = '',
+	},
+	sections = {
+		lualine_a = { 
+			{
+				'buffers',
+				show_filename_only = true,   -- Shows shortened relative path when set to false.
+				hide_filename_extension = false,   -- Hide filename extension when set to true.
+				show_modified_status = true, -- Shows indicator when the buffer is modified.
+				mode = 0,
+				max_length = vim.o.columns * 2 / 3, -- Maximum width of buffers component,
+				-- it can also be a function that returns
+				-- the value of `max_length` dynamically.
+				filetype_names = {
+					TelescopePrompt = 'Telescope',
+					dashboard = 'Dashboard',
+					packer = 'Packer',
+					fzf = 'FZF',
+					alpha = 'Alpha'
+				}, -- Shows specific buffer name for that filetype ( { `filetype` = `buffer_name`, ... } )
+				buffers_color = {
+					-- Same values as the general color option can be used here.
+					active = 'lualine_buffer_normal',     -- Color for active buffer.
+					inactive = 'lualine_buffer_inactive', -- Color for inactive buffer.
+				},
+
+				symbols = {
+					modified = ' ●',      -- Text to show when the buffer is modified
+					alternate_file = '#', -- Text to show to identify the alternate file
+					directory =  '',     -- Text to show when the buffer is a directory
+				},
+			},
+			"mode"
+		},
+	},
+}
+
+require('nvim-treesitter').setup {
+	indent = {
+		enable = true
 	}
+}
+
+require('nvim-treesitter.configs').setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "javascript" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+    additional_vim_regex_highlighting = false,
 }
 
 require("ibl").setup()
 
 vim.opt.compatible = false
---vim.cmd 'scriptencoding utf-8'
 vim.cmd 'syntax on'
 vim.cmd 'colorscheme contrastneed'
 vim.cmd 'highlight ColorColumn ctermbg=241'
@@ -343,7 +349,9 @@ vim.opt.scrolloff = 10
 vim.api.nvim_set_keymap("n", "<leader><leader>", "<c-^>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>g", ":Goyo<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree toggle<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-w>", ":bd<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-w>x", ":bd<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-w>|", ":vsplit<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-w>-", ":split<CR>", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<C-J>", "<C-W><C-J>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-K>", "<C-W><C-K>", { noremap = true })
@@ -363,3 +371,76 @@ vim.api.nvim_set_keymap("n", "<C-tab>", ":bn<CR>", { noremap = true })
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
 
+-- LSP Config
+local nvim_lsp = require('lspconfig')
+local on_attach = function(client, bufnr)
+	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+	local opts = { noremap=true, silent=true }
+	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+	buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+	buf_set_keymap('n', '<leader>xD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+	buf_set_keymap('n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+	buf_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+	buf_set_keymap('n', '<leader>dd', '<cmd>Telescope diagnostics<CR>', opts)
+	if client.resolved_capabilities.document_formatting then
+		buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	elseif client.resolved_capabilities.document_range_formatting then
+		buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	end
+end
+local servers = {'rust_analyzer', 'gopls', 'html', 'intelephense', 'clangd'}
+for _, lsp in ipairs(servers) do
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	nvim_lsp[lsp].setup {
+		on_attach = on_attach,
+		capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
+	}
+end
+
+nvim_lsp.pylsp.setup{
+	on_attach = on_attach,
+	capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
+	settings = {
+		pylsp = {
+			plugins = {
+				pylint = {
+					enabled = true,
+				}
+			}
+		}
+	}
+}
+
+vim.diagnostic.config({
+   virtual_text = {
+        severity = { min = vim.diagnostic.severity.WARN }
+   }
+})
+
+nvim_lsp.lua_ls.setup {
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT'
+          },
+          -- Make the server aware of Neovim runtime files
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME
+            }
+          }
+        }
+      })
+    end
+    return true
+  end
+}
