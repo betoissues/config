@@ -46,3 +46,6 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="/opt/homebrew/bin:/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
