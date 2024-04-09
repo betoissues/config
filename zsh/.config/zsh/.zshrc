@@ -1,6 +1,5 @@
 autoload -U colors && colors
-export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
-export PATH="$PATH:$HOME/.yarn/bin"
+export GPG_TTY=$(tty)
 export PATH=~/.composer/vendor/bin:$PATH
 export PATH="$(brew --prefix)/opt/python@3.11/libexec/bin:$PATH"
 
@@ -27,7 +26,7 @@ antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
 
-alias s="$XDG_CONFIG_HOME/tmux/tmux_session.sh"
+alias s="$HOME/.config/tmux/tmux_session.sh"
 alias l='eza -hbG --icons --color=automatic'
 alias ll='eza -lhbrG@ --icons --color=automatic'
 alias ls='eza --icons --color=automatic'
