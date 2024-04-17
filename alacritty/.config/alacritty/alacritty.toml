@@ -895,6 +895,7 @@ decorations = "Full"
 dynamic_padding = true
 dynamic_title = true
 opacity = 1.0
+option_as_alt = "Both"
 
 [window.dimensions]
 columns = 80
