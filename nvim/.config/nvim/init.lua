@@ -29,6 +29,7 @@ local plugins = {
                     javascriptreact = { { "prettierd", "prettier" } },
                     typescriptreact = { { "prettierd", "prettier" } },
                     json = { { "prettierd", "prettier" } },
+                    go = { { "goimports" } },
                     graphql = { { "prettierd", "prettier" } },
                     markdown = { { "prettierd", "prettier" } },
                     html = { "htmlbeautifier" },
@@ -189,6 +190,8 @@ local plugins = {
 
 require("lazy").setup(plugins, {})
 require("mason").setup()
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup()
 
 require("noice").setup({
     presets = {
@@ -438,28 +441,30 @@ local on_attach = function(client, bufnr)
         buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     end
 end
-local servers = {'rust_analyzer', 'gopls', 'html', 'intelephense', 'clangd', 'tsserver', 'eslint', 'jsonls'}
-for _, lsp in ipairs(servers) do
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    nvim_lsp[lsp].setup {
-        on_attach = on_attach,
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
-    }
-end
 
-nvim_lsp.pylsp.setup{
-    on_attach = on_attach,
-    capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-    settings = {
-        pylsp = {
-            plugins = {
-                pylint = {
-                    enabled = true,
-                }
-            }
-        }
+mason_lspconfig.setup_handlers {
+  function(server_name)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    require('lspconfig')[server_name].setup {
+      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
+      on_attach = on_attach,
     }
+  end,
 }
+
+-- nvim_lsp.pylsp.setup{
+--     on_attach = on_attach,
+--     capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+--     settings = {
+--         pylsp = {
+--             plugins = {
+--                 pylint = {
+--                     enabled = true,
+--                 }
+--             }
+--         }
+--     }
+-- }
 
 vim.diagnostic.config({
     virtual_text = {
