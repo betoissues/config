@@ -269,7 +269,7 @@ require('lualine').setup {
     sections = {
         lualine_a = {
             {
-                'buffers',
+                '',
                 show_filename_only = true,   -- Shows shortened relative path when set to false.
                 hide_filename_extension = false,   -- Hide filename extension when set to true.
                 show_modified_status = true, -- Shows indicator when the buffer is modified.
@@ -431,6 +431,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', '<leader>xD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -446,7 +447,7 @@ mason_lspconfig.setup_handlers {
   function(server_name)
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     require('lspconfig')[server_name].setup {
-      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
+      capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
       on_attach = on_attach,
     }
   end,
