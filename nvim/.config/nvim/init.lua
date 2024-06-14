@@ -35,10 +35,12 @@ local plugins = {
                     html = { "htmlbeautifier" },
                     bash = { "beautysh" },
                     proto = { "buf" },
+                    python = { "flake8", "black", "isort" },
                     yaml = { "yamlfix" },
                     toml = { "taplo" },
                     css = { { "prettierd", "prettier" } },
                     scss = { { "prettierd", "prettier" } },
+                    zsh = { { "beautysh" } },
                 },
             })
 
@@ -66,6 +68,7 @@ local plugins = {
                 javascriptreact = { "eslint_d" },
                 typescriptreact = { "eslint_d" },
                 terraform = { "tflint" },
+                python = { "flake8", "mypy" },
             }
 
             local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -85,10 +88,11 @@ local plugins = {
     {
         'linux-cultist/venv-selector.nvim',
         dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim', 'mfussenegger/nvim-dap-python' },
+        branch = "regexp",
         opts = {
             -- Your options go here
             name = ".venv",
-            auto_refresh = true
+            auto_refresh = true,
         },
         event = 'VeryLazy', -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
         keys = {

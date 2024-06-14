@@ -1,7 +1,6 @@
 autoload -U colors && colors
 export GPG_TTY=$(tty)
 export PATH=~/.composer/vendor/bin:$PATH
-export PATH="$(brew --prefix)/opt/python@3.11/libexec/bin:$PATH"
 
 bindkey -e
 bindkey '^p' history-search-backward
@@ -39,6 +38,7 @@ antigen theme gianu
 antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle Aloxaf/fzf-tab
+antigen bundle lincheney/fzf-tab-completion
 antigen apply
 
 zstyle ':completion:*' menu no
@@ -65,7 +65,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2
 eval "$(zoxide init --cmd cd zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="/opt/homebrew/bin:/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
+export PATH="$(brew --prefix)/bin:$(brew --prefix)/opt/python@3.12/libexec/bin:$PATH"
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
