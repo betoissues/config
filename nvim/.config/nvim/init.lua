@@ -439,7 +439,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>xD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    buf_set_keymap('n', '<leader>dd', '<cmd>Telescope diagnostics<CR>', opts)
+    buf_set_keymap('n', '<leader>fl', '<cmd>Telescope diagnostics<CR>', opts)
     if client.resolved_capabilities.document_formatting then
         buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     elseif client.resolved_capabilities.document_range_formatting then
@@ -447,55 +447,61 @@ local on_attach = function(client, bufnr)
     end
 end
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    require('lspconfig')[server_name].setup {
-      capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
-      on_attach = on_attach,
-    }
-  end,
-}
-
--- nvim_lsp.pylsp.setup{
---     on_attach = on_attach,
---     capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
---     settings = {
---         pylsp = {
---             plugins = {
---                 pylint = {
---                     enabled = true,
---                 }
---             }
---         }
---     }
--- }
-
 vim.diagnostic.config({
     virtual_text = {
         severity = { min = vim.diagnostic.severity.WARN }
     }
 })
 
-nvim_lsp.lua_ls.setup {
-    on_init = function(client)
-        local path = client.workspace_folders[1].name
-        if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
-            client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-                Lua = {
-                    runtime = {
-                        version = 'LuaJIT'
-                    },
-                    -- Make the server aware of Neovim runtime files
-                    workspace = {
-                        checkThirdParty = false,
-                        library = {
-                            vim.env.VIMRUNTIME
+
+mason_lspconfig.setup_handlers {
+    function(server_name)
+        require('lspconfig')[server_name].setup {
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            on_attach = on_attach,
+        }
+    end,
+    ['pylsp'] = function()
+        require('lspconfig').pylsp.setup {
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            on_attach = on_attach,
+            settings = {
+                pylsp = {
+                    plugins = {
+                        pylint = {
+                            enabled = true,
                         }
                     }
                 }
-            })
-        end
-        return true
-    end
+            }
+        }
+    end,
+    ['lua_ls'] = function()
+        require('lspconfig').lua_ls.setup {
+            settings = {
+                Lua = {
+                    runtime = {
+                        -- Tell the language server which version of Lua you're using
+                        -- (most likely LuaJIT in the case of Neovim)
+                        version = 'LuaJIT',
+                    },
+                    diagnostics = {
+                        -- Get the language server to recognize the `vim` global
+                        globals = {
+                            'vim',
+                            'require'
+                        },
+                    },
+                    workspace = {
+                        -- Make the server aware of Neovim runtime files
+                        library = vim.api.nvim_get_runtime_file("", true),
+                    },
+                    -- Do not send telemetry data containing a randomized but unique identifier
+                    telemetry = {
+                        enable = false,
+                    },
+                },
+            }
+        }
+    end,
 }
