@@ -282,6 +282,12 @@ require('telescope').setup {
         ["ui-select"] = {
             require("telescope.themes").get_dropdown {}
         }
+    },
+    pickers = {
+        find_files = {
+            hidden = true,
+            find_command = {'rg', '--files', '--hidden', '-g', '!.git' }
+        }
     }
 }
 require("telescope").load_extension("ui-select")
