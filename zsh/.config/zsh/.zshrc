@@ -59,6 +59,9 @@ alias mkdir="mkdir -pv"
 alias cp='cp -iv -r'
 alias mv="mv -iv"
 alias rm="rm -Iv"
+alias bwp="rbw-menu  password"
+alias bwu="rbw-menu  user"
+alias bwc="rbw-menu  code"
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
