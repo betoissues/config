@@ -44,6 +44,7 @@ antigen apply
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --icons --color=automatic $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --icons --color=automatic $realpath'
+zstyle ':fzf-tab:complete:zoxide:*' fzf-preview 'eza --icons --color=automatic $realpath'
 
 alias s="$HOME/.config/tmux/tmux_session.sh"
 alias l='eza -hbG --icons --color=automatic'

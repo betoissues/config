@@ -223,7 +223,36 @@ local plugins = {
                 min_chars = 2,
             },
         },
-    }
+    },
+    {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+            update_interval = 1000,
+            set_dark_mode = function()
+            vim.api.nvim_set_option_value("background", "dark", {})
+            require("mellifluous").setup({
+                bg_contrast = "hard",
+                color_set = "kanagawa_dragon"
+            }) -- optional, see configuration section.
+            vim.cmd("colorscheme mellifluous")
+            end,
+            set_light_mode = function()
+            vim.api.nvim_set_option_value("background", "light", {})
+            require("mellifluous").setup({
+                bg_contrast = "hard",
+                color_set = "mellifluous"
+            }) -- optional, see configuration section.
+            vim.cmd("colorscheme mellifluous")
+            end,
+        },
+    },
+    {
+        "ramojus/mellifluous.nvim",
+        -- version = "v0.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
+        config = function()
+            require("mellifluous").setup({}) -- optional, see configuration section.
+        end,
+    },
 }
 
 require("lazy").setup(plugins, {})
@@ -270,6 +299,7 @@ require('gitsigns').setup()
 local actions = require('telescope.actions')
 require('telescope').setup {
     defaults = {
+        file_ignore_patterns = { ".git/", "vendor/", "node_modules"},
         mappings = {
             i = {
                 ["<esc>"] = actions.close,
@@ -287,6 +317,12 @@ require('telescope').setup {
         find_files = {
             hidden = true,
             find_command = {'rg', '--files', '--hidden', '-g', '!.git' }
+        },
+        grep_string = {
+            additional_args = {'--hidden'}
+        },
+        live_grep = {
+            additional_args = {'--hidden'}
         }
     }
 }
@@ -372,7 +408,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 vim.cmd 'syntax on'
-vim.cmd 'colorscheme contrastneed'
+-- vim.cmd 'colorscheme contrastneed'
 vim.cmd 'highlight ColorColumn ctermbg=241'
 vim.cmd 'filetype plugin indent on'
 
@@ -414,7 +450,7 @@ vim.opt.formatoptions:append({ q = true }) -- enable formatting of comments with
 vim.opt.formatoptions:append({ n = true }) -- detect lists for formatting
 vim.opt.formatoptions:append({ b = true }) -- auto-wrap in insert mode, and do not wrap old long
 
-vim.opt.background = "dark"
+-- vim.opt.background = "light"
 vim.opt.timeoutlen = 250
 vim.opt.showmode = false
 vim.opt.switchbuf = "useopen"
