@@ -49,34 +49,28 @@ config.font_rules = {
 
 config.color_scheme = 'Kanagawa Dragon (Gogh)'
 
-local light_theme = wezterm.color.get_builtin_schemes()['Kanagawa Dragon (Gogh)']
-light_theme.background = "#f0f0f0"
-light_theme.foreground = "#2f2f2f"
-light_theme.ansi = {
-    "#1F1F28",
-    "#c84053",
-    "#6f894e",
-    "#77713f",
-    "#4d699b",
-    "#b35b79",
-    "#597b75",
-    "#545464",
+local dark_theme = wezterm.color.get_builtin_schemes()['Mellifluous']
+dark_theme.foreground = "#f0f0f0"
+dark_theme.background = "#111111"
+
+local light_theme = {
+
+background = "#ededed",
+foreground = "#1a1a1a",
+cursor_bg = "#bfad9e",
+cursor_border = "#bfad9e",
+cursor_fg = "#1a1a1a",
+selection_bg = "#2d2d2d",
+selection_fg = "#c0af8c",
+ansi = {"#dadada","#d29393","#b3b393","#cbaa89","#a8a1be","#b39fb0","#c0af8c","#1a1a1a"},
+brights = {"#ffffff","#c95954","#828040","#a6794c","#5a6599","#9c6995","#74a39e","#5b5b5b"},
 }
 
-light_theme.brights = {
-    "#8a8980",
-    "#d7474b",
-    "#6e915f",
-    "#836f4a",
-    "#6693bf",
-    "#624c83",
-    "#5e857a",
-    "#43436c",
-}
 
 
 config.color_schemes = {
-    ['Kanagawa Light'] = light_theme,
+    ['Mellifluous Dark'] = dark_theme,
+    ['Mellifluous Light'] = light_theme,
 }
 
 function get_appearance()
@@ -88,9 +82,9 @@ end
 
 function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
-    return 'Kanagawa Dragon (Gogh)'
+    return 'Mellifluous Dark'
   else
-    return 'Kanagawa Light'
+    return 'Mellifluous Light'
   end
 end
 
