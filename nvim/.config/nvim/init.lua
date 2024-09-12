@@ -229,30 +229,31 @@ local plugins = {
     opts = {
             update_interval = 1000,
             set_dark_mode = function()
-            vim.api.nvim_set_option_value("background", "dark", {})
-            require("mellifluous").setup({
-                bg_contrast = "hard",
-                color_set = "kanagawa_dragon"
-            }) -- optional, see configuration section.
-            vim.cmd("colorscheme mellifluous")
+            vim.cmd("colorscheme kanagawa-dragon")
             end,
             set_light_mode = function()
-            vim.api.nvim_set_option_value("background", "light", {})
-            require("mellifluous").setup({
-                bg_contrast = "hard",
-                color_set = "mellifluous"
-            }) -- optional, see configuration section.
-            vim.cmd("colorscheme mellifluous")
+            vim.cmd("colorscheme kanagawa-lotus")
             end,
         },
     },
     {
-        "ramojus/mellifluous.nvim",
-        -- version = "v0.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
-        config = function()
-            require("mellifluous").setup({}) -- optional, see configuration section.
-        end,
-    },
+        "rebelot/kanagawa.nvim",
+        opts = {
+            colors = {
+                palette = {
+                    lotusInk1 = "#222222",
+                    lotusWhite3 = "#EEEEEE"
+                },
+                theme = {
+                    all = {
+                        ui = {
+                            bg_gutter = "none"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 require("lazy").setup(plugins, {})

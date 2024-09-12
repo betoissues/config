@@ -21,56 +21,36 @@ config.font_rules = {
   },
 }
 
--- config.colors = {
---     background = "#0f0f0f",
---     foreground = "#f0f0f0",
---     cursor_fg = "#d8d8d8",
---     brights = {
---         "#585858",
---         "#ab4642",
---         "#a1b56c",
---         "#f7ca88",
---         "#7cafc2",
---         "#ba8baf",
---         "#86c1b9",
---         "#f8f8f8",
---     },
---     ansi = {
---         "#181818",
---         "#ab4642",
---         "#a1b56c",
---         "#f7ca88",
---         "#7cafc2",
---         "#ba8baf",
---         "#86c1b9",
---         "#d8d8d8",
---     },
--- }
+config.force_reverse_video_cursor = true
 
-config.color_scheme = 'Kanagawa Dragon (Gogh)'
-
-local dark_theme = wezterm.color.get_builtin_schemes()['Mellifluous']
+local dark_theme = wezterm.color.get_builtin_schemes()['Kanagawa Dragon (Gogh)']
 dark_theme.foreground = "#f0f0f0"
 dark_theme.background = "#111111"
 
 local light_theme = {
+    background = "#EEEEEE",
+    foreground = "#222222",
 
-background = "#ededed",
-foreground = "#1a1a1a",
-cursor_bg = "#bfad9e",
-cursor_border = "#bfad9e",
-cursor_fg = "#1a1a1a",
-selection_bg = "#2d2d2d",
-selection_fg = "#c0af8c",
-ansi = {"#dadada","#d29393","#b3b393","#cbaa89","#a8a1be","#b39fb0","#c0af8c","#1a1a1a"},
-brights = {"#ffffff","#c95954","#828040","#a6794c","#5a6599","#9c6995","#74a39e","#5b5b5b"},
+    cursor_bg = "#c8c093",
+    cursor_fg = "#c8c093",
+    cursor_border = "#c8c093",
+
+    selection_fg = "#c8c093",
+    selection_bg = "#2d4f67",
+
+    scrollbar_thumb = "#16161d",
+    split = "#16161d",
+
+    ansi = { "#c8c093", "#c34043", "#76946a", "#c0a36e", "#7e9cd8", "#957fb8", "#6a9589", "#090618" },
+    brights = { "#dcd7ba", "#e82424", "#98bb6c", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#727169" },
+    indexed = { [16] = "#ffa066", [17] = "#ff5d62" },
 }
 
 
 
 config.color_schemes = {
-    ['Mellifluous Dark'] = dark_theme,
-    ['Mellifluous Light'] = light_theme,
+    ['Kanagawa Dark'] = dark_theme,
+    ['Kanagawa Light'] = light_theme,
 }
 
 function get_appearance()
@@ -82,9 +62,9 @@ end
 
 function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
-    return 'Mellifluous Dark'
+    return 'Kanagawa Dark'
   else
-    return 'Mellifluous Light'
+    return 'Kanagawa Light'
   end
 end
 
