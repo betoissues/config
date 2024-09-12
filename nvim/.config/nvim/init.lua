@@ -419,6 +419,7 @@ vim.g["g:python3_host_prog"] = "/usr/bin/python3"
 vim.opt.undofile = true
 vim.opt.undodir = HOME .. "/.local/share/nvim/undodir"
 
+vim.opt.cursorline = true
 vim.opt.conceallevel = 1
 vim.opt.number = true
 vim.opt.numberwidth = 4
