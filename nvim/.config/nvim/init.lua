@@ -24,6 +24,7 @@ local plugins = {
             require("conform").setup({
                 formatters_by_ft = {
                     lua = { "stylua" },
+                    c = { "clang-format" },
                     javascript = { { "prettierd", "prettier" } },
                     typescript = { { "prettierd", "prettier" } },
                     javascriptreact = { { "prettierd", "prettier" } },
