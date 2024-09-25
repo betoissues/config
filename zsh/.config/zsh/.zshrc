@@ -1,6 +1,7 @@
 autoload -U colors && colors
 export GPG_TTY=$(tty)
 export PATH=~/.composer/vendor/bin:$PATH
+export RBW_MENU_COMMAND=fzf
 
 bindkey -e
 bindkey '^p' history-search-backward
@@ -46,6 +47,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --icons --color=automatic $real
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza --icons --color=automatic $realpath'
 zstyle ':fzf-tab:complete:zoxide:*' fzf-preview 'eza --icons --color=automatic $realpath'
 
+getpw() {
+    echo $(rbw-menu $1) | pbcopy
+}
+
 alias s="$HOME/.config/tmux/tmux_session.sh"
 alias l='eza -hbG --icons --color=automatic'
 alias ll='eza -lhbrG@ --icons --color=automatic'
@@ -60,9 +65,9 @@ alias mkdir="mkdir -pv"
 alias cp='cp -iv -r'
 alias mv="mv -iv"
 alias rm="rm -Iv"
-alias bwp="rbw-menu  password"
-alias bwu="rbw-menu  user"
-alias bwc="rbw-menu  code"
+alias bwp="getpw password"
+alias bwu="getpw user"
+alias bwc="getpw code"
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
@@ -72,4 +77,4 @@ eval "$(zoxide init --cmd cd zsh)"
 export PATH="$(brew --prefix)/bin:$(brew --prefix)/opt/python@3.12/libexec/bin:$PATH"
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOROOT/bin:$HOME/.local/bin
