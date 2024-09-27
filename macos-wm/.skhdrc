@@ -92,7 +92,10 @@ shift + alt - j : yabai -m window --swap south
 shift + alt - k : yabai -m window --swap north
 
 # move managed window
-# shift + cmd - h : yabai -m window --warp east
+shift + cmd - h : yabai -m window --warp west
+shift + cmd - l : yabai -m window --warp east
+shift + cmd - j : yabai -m window --warp south
+shift + cmd - k : yabai -m window --warp north
 
 # balance size of windows
 shift + alt - 0 : yabai -m space --balance
@@ -123,8 +126,8 @@ shift + alt - 4 : yabai -m window --space  4
 shift + alt - 5 : yabai -m window --space  5
 
 # focus monitor
-ctrl + alt - z  : yabai -m display --focus prev
-# ctrl + alt - 3  : yabai -m display --focus 3
+alt - z : yabai -m display --focus west
+alt - x : yabai -m display --focus east
 
 # send window to monitor and follow focus
 # ctrl + cmd - c  : yabai -m window --display next; yabai -m display --focus next
@@ -162,3 +165,7 @@ alt - p : yabai -m window --toggle sticky --toggle pip
 
 alt - b : yabai -m space --layout stack
 shift + alt - b : yabai -m space --layout bsp
+
+ctrl + alt - q : yabai --stop-service
+ctrl + alt - s : yabai --start-service
+ctrl + alt - r : yabai --restart-service

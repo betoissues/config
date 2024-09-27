@@ -19,7 +19,7 @@ yabai -m config                                 \
     focus_follows_mouse          on            \
     display_arrangement_order    default        \
     window_origin_display        default        \
-    window_placement             first_child   \
+    window_placement             second_child   \
     window_zoom_persist          on             \
     window_shadow                on             \
     window_animation_duration    0.0            \
