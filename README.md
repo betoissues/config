@@ -14,14 +14,13 @@ Currently there are configuration files for the following software:
 - dunst (includes a `launch.sh`) // todo: remove `feh` from this script
 - kde-2bwm (replaces Plasma's `set_window_manager.sh`)
 - khard (for vCard addressbook management)
-- newsboat (archive purpose as i'm currently using `miniflux`)
-- nvim (mostly for rust development, although there's some python and php
-  support)
+- nvim
 - polybar (may be splitted between desktop and laptop. mail checker requires
   authentication and specific devices/interfaces are to be set)
 - rofi (with gruvbox theme, alacritty terminal and ssh enabled)
 - tmux (there's `tpm` plugin support but it's not currently in use)
 - vdirsyncer (CardDAV sync, yet to add CalDAV)
+- wezterm
 - X11 (`.xinitrc` for starting X from tty)
 - zathura
 - zsh (requires `antigen`, loads local theme, syntax highlighting not included

@@ -158,7 +158,6 @@ local plugins = {
     -- General
     "majutsushi/tagbar",
     "jiangmiao/auto-pairs",
-    "junegunn/goyo.vim",
     "junegunn/vim-easy-align",
     "nvim-lualine/lualine.nvim",
     "nvim-lua/plenary.nvim",
@@ -223,18 +222,6 @@ local plugins = {
                 -- Trigger completion at 2 chars.
                 min_chars = 2,
             },
-        },
-    },
-    {
-    "f-person/auto-dark-mode.nvim",
-    opts = {
-            update_interval = 1000,
-            set_dark_mode = function()
-            vim.cmd("colorscheme kanagawa-dragon")
-            end,
-            set_light_mode = function()
-            vim.cmd("colorscheme kanagawa-lotus")
-            end,
         },
     },
     {
@@ -410,7 +397,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 vim.cmd 'syntax on'
--- vim.cmd 'colorscheme contrastneed'
+vim.cmd 'colorscheme kanagawa-dragon'
 vim.cmd 'highlight ColorColumn ctermbg=241'
 vim.cmd 'filetype plugin indent on'
 
@@ -556,34 +543,6 @@ mason_lspconfig.setup_handlers {
                         }
                     }
                 }
-            }
-        }
-    end,
-    ['lua_ls'] = function()
-        require('lspconfig').lua_ls.setup {
-            settings = {
-                Lua = {
-                    runtime = {
-                        -- Tell the language server which version of Lua you're using
-                        -- (most likely LuaJIT in the case of Neovim)
-                        version = 'LuaJIT',
-                    },
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = {
-                            'vim',
-                            'require'
-                        },
-                    },
-                    workspace = {
-                        -- Make the server aware of Neovim runtime files
-                        library = vim.api.nvim_get_runtime_file("", true),
-                    },
-                    -- Do not send telemetry data containing a randomized but unique identifier
-                    telemetry = {
-                        enable = false,
-                    },
-                },
             }
         }
     end,
