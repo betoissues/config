@@ -22,7 +22,7 @@ setopt hist_find_no_dups
 LSCOLORS="Gxfxcxdxbxegedabagacad"
 export NVM_DIR="$HOME/.nvm"
 
-source /usr/share/zsh/share/antigen.zsh
+source /opt/homebrew/share/antigen/antigen.zsh
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle Tarrasch/zsh-autoenv
@@ -76,7 +76,9 @@ alias bwc="getpw code"
 eval "$(zoxide init --cmd cd zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#export PATH="$(brew --prefix)/bin:$(brew --prefix)/opt/python@3.12/libexec/bin:$PATH"
+
+export PATH="$(brew --prefix)/bin:$(brew --prefix)/opt/python@3.11/libexec/bin:$PATH"
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin:$HOME/.local/bin
+export PATH=$PATH:$GOROOT/bin:$HOME/.local/bin:$HOME/.cargo/bin
+source "$GOPATH/pkg/mod/github.com/sachaos/todoist@v0.20.0/todoist_functions_fzf.sh"

@@ -48,7 +48,7 @@ local plugins = {
             vim.keymap.set({ "n", "v" }, "<leader>lf", function()
                 require("conform").format({
                     lsp_fallback = true,
-                    async = false,
+                    async = true,
                     timeout_ms = 500,
                 })
             end, { desc = "Format file or range (in visual mode)" })
@@ -396,7 +396,7 @@ require('nvim-treesitter').setup {
 
 require('nvim-treesitter.configs').setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "javascript", "typescript", "dockerfile", "go", "markdown", "yaml" },
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "javascript", "typescript", "dockerfile", "go", "markdown", "yaml", "php" },
     highlight = {
         enable = true,
     },
