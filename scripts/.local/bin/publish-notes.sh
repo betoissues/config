@@ -16,5 +16,10 @@ obsidian-export $VAULT_PATH $FLAGS $VAULT_PATH/07\ Wiki $DEST_PATH/content &&
 hugo convert toTOML --logLevel debug --unsafe
 
 # required to fix some footnotes issues
+# Remove option from MacOS version of sed
 #find . -type f -name "*.md" -exec sed -i '' -e 's/^[ \t]*\(\[^[0-9]]:.*$\)/\1/' {} \;
+
+# GNU sed
 find . -type f -name "*.md" -exec sed -i -e 's/^[ \t]*\(\[^[0-9]]:.*$\)/\1/' {} \;
+
+. build.sh
