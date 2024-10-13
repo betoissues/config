@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ~/.zprofile
+
+filename=/tmp/tmp_image.jpg
+
+screencapture -i $filename && curl -F "file=@$filename" -H "Authorization: $RPASTE_KEY" https://paste.nixden.net | pbcopy

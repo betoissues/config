@@ -49,6 +49,10 @@ getpw() {
     echo $(rbw-menu $1) | pbcopy
 }
 
+function rpaste() {
+  curl -F "file=@$1" -H "Authorization: $RPASTE_KEY" "https://paste.nixden.net"
+}
+
 alias s="$HOME/.config/tmux/tmux_session.sh"
 alias l='eza -hbG --icons --color=automatic'
 alias ll='eza -lhbrG@ --icons --color=automatic'
