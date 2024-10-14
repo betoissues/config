@@ -486,8 +486,8 @@ vim.opt.listchars = {
 }
 vim.opt.scrolloff = 10
 
-vim.api.nvim_set_keymap("n", "<leader><leader>", "<c-^>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>g", ":Goyo<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', 'sd', ":-r !date +\\%Y-\\%m-\\%d<CR>$j", { noremap = true })
+vim.api.nvim_set_keymap('n', 'st', ":-r !date +\"\\%Y-\\%m-\\%d \\%H:\\%M\"<CR>$j", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree toggle<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>x", ":bd<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>|", ":vsplit<CR>", { noremap = true })
