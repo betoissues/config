@@ -169,3 +169,5 @@ shift + alt - b : yabai -m space --layout bsp
 ctrl + alt - q : yabai --stop-service
 ctrl + alt - s : yabai --start-service
 ctrl + alt - r : yabai --restart-service
+
+shift + cmd - 9 : screenpaste

@@ -432,11 +432,11 @@ vim.opt.numberwidth = 4
 vim.opt.swapfile = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+vim.opt.tabstop = 8
+vim.opt.shiftwidth = 8
+vim.opt.softtabstop = 8
 vim.opt.shiftround = true
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.opt.preserveindent = true
 vim.opt.copyindent = true
 vim.opt.clipboard:append("unnamedplus")
@@ -528,11 +528,6 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<leader>xr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     buf_set_keymap('n', '<leader>fl', '<cmd>Telescope diagnostics<CR>', opts)
-    if client.resolved_capabilities.document_formatting then
-        buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    end
 end
 
 vim.diagnostic.config({

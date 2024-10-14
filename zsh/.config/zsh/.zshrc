@@ -81,4 +81,6 @@ export PATH="$(brew --prefix)/bin:$(brew --prefix)/opt/python@3.11/libexec/bin:$
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$HOME/.local/bin:$HOME/.cargo/bin
-source "$GOPATH/pkg/mod/github.com/sachaos/todoist@v0.20.0/todoist_functions_fzf.sh"
+export PATH="/opt/homebrew/opt/mysql-client@8.4/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"

@@ -6,7 +6,6 @@ DEST_PATH="$HOME/src/notes"
 
 FLAGS="--only-tags published --frontmatter always --start-at"
 
-
 set -x
 
 cd $DEST_PATH
