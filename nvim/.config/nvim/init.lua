@@ -487,9 +487,9 @@ vim.opt.listchars = {
 vim.opt.scrolloff = 10
 
 vim.api.nvim_set_keymap("n", "<leader><leader>", "<C-^>", { noremap = true })
-vim.api.nvim_set_keymap('n', 'sd', ":-r !date +\\%Y-\\%m-\\%d<CR>$j", { noremap = true })
-vim.api.nvim_set_keymap('n', 'st', ":-r !date +\"\\%Y-\\%m-\\%d \\%H:\\%M\"<CR>$j", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-n>", ":Neotree toggle<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>sd', ":-r !date +\\%Y-\\%m-\\%d<CR>$j", { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>st', ":-r !date +\"\\%Y-\\%m-\\%d \\%H:\\%M\"<CR>$j", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>p", ":Neotree toggle<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>x", ":bd<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>|", ":vsplit<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>-", ":split<CR>", { noremap = true })
@@ -507,10 +507,13 @@ vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { noremap = true })
 vim.api.nvim_set_keymap("n", "j", "gj", { noremap = true })
 vim.api.nvim_set_keymap("n", "k", "gk", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>t", ":TagbarToggle<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-tab>", ":bn<CR>", { noremap = true })
+
+vim.api.nvim_set_keymap("n", "<C-w>n", ":bnext<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-w>p", ":bprev<CR>", { noremap = true })
 
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
+
 
 -- LSP Config
 local nvim_lsp = require('lspconfig')

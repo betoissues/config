@@ -4,6 +4,8 @@ nvim/.config/nvim/.netrwhist
 nvim/.config/nvim/plugged/*
 nvim/.config/nvim/plugin/
 nvim/.config/nvim/ftplugin/*
+nvim/.config/nvim/lazy/*
+nvim/.config/nvim/lazy-lock.json
 
 polybar/.config/polybar/gmail/credentials.json
 
