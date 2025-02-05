@@ -25,24 +25,36 @@ local plugins = {
                 formatters_by_ft = {
                     lua = { "stylua" },
                     c = { "clang-format" },
-                    javascript = { { "prettierd", "prettier" } },
-                    typescript = { { "prettierd", "prettier" } },
-                    javascriptreact = { { "prettierd", "prettier" } },
-                    typescriptreact = { { "prettierd", "prettier" } },
-                    json = { { "prettierd", "prettier" } },
-                    go = { { "goimports" } },
-                    graphql = { { "prettierd", "prettier" } },
-                    markdown = { { "prettierd", "prettier" } },
+                    javascript = { "prettierd", "prettier" },
+                    typescript = { "prettierd", "prettier" },
+                    javascriptreact = { "prettierd", "prettier" },
+                    typescriptreact = { "prettierd", "prettier" },
+                    json = { "prettierd", "prettier" },
+                    go = { "goimports" },
+                    graphql = { "prettierd", "prettier" },
+                    markdown = { "prettierd", "prettier" },
                     html = { "htmlbeautifier" },
                     bash = { "beautysh" },
                     proto = { "buf" },
                     python = { "flake8", "black", "isort" },
                     yaml = { "yamlfix" },
                     toml = { "taplo" },
-                    css = { { "prettierd", "prettier" } },
-                    scss = { { "prettierd", "prettier" } },
-                    zsh = { { "beautysh" } },
+                    css = { "prettierd", "prettier" },
+                    scss = { "prettierd", "prettier" },
+                    php = { "php-cs-fixer" },
+                    zsh = { "beautysh" },
                 },
+                formatters = {
+                    ["php-cs-fixer"] = {
+                        command = "php-cs-fixer",
+                        args = {
+                            "fix",
+                             "--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
+                             "$FILENAME",
+                },
+        stdin = false,
+      },
+    },
             })
 
             vim.keymap.set({ "n", "v" }, "<leader>lf", function()
