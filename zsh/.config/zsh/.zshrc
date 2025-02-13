@@ -84,3 +84,6 @@ export PATH=$PATH:$GOROOT/bin:$HOME/.local/bin:$HOME/.cargo/bin
 export PATH="/opt/homebrew/opt/mysql-client@8.4/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion

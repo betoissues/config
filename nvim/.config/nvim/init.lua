@@ -25,23 +25,23 @@ local plugins = {
                 formatters_by_ft = {
                     lua = { "stylua" },
                     c = { "clang-format" },
-                    javascript = { { "prettierd", "prettier" } },
-                    typescript = { { "prettierd", "prettier" } },
-                    javascriptreact = { { "prettierd", "prettier" } },
-                    typescriptreact = { { "prettierd", "prettier" } },
-                    json = { { "prettierd", "prettier" } },
-                    go = { { "goimports" } },
-                    graphql = { { "prettierd", "prettier" } },
-                    markdown = { { "prettierd", "prettier" } },
+                    javascript = { "prettierd", "prettier" },
+                    typescript = { "prettierd", "prettier" },
+                    javascriptreact = { "prettierd", "prettier" },
+                    typescriptreact = { "prettierd", "prettier" },
+                    json = { "prettierd", "prettier" },
+                    go = { "goimports" },
+                    graphql = { "prettierd", "prettier" },
+                    markdown = { "prettierd", "prettier" },
                     html = { "htmlbeautifier" },
                     bash = { "beautysh" },
                     proto = { "buf" },
                     python = { "flake8", "black", "isort" },
                     yaml = { "yamlfix" },
                     toml = { "taplo" },
-                    css = { { "prettierd", "prettier" } },
-                    scss = { { "prettierd", "prettier" } },
-                    zsh = { { "beautysh" } },
+                    css = { "prettierd", "prettier" },
+                    scss = { "prettierd", "prettier" },
+                    zsh = { "beautysh" },
                 },
             })
 
@@ -245,7 +245,25 @@ local plugins = {
             vim.g.zenbones_transparent_background = true
             vim.cmd.colorscheme('zenbones')
         end
-    }
+    },
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+			"TmuxNavigatorProcessList",
+		},
+		keys = {
+			{ "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
+	}
 }
 
 require("lazy").setup(plugins, {})
@@ -478,16 +496,6 @@ vim.api.nvim_set_keymap("n", "<leader>p", ":Neotree toggle<CR>", { noremap = tru
 vim.api.nvim_set_keymap("n", "<C-w>x", ":bd<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>|", ":vsplit<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>-", ":split<CR>", { noremap = true })
-
-vim.api.nvim_set_keymap("n", "<C-J>", "<C-W><C-J>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-K>", "<C-W><C-K>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-L>", "<C-W><C-L>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-H>", "<C-W><C-H>", { noremap = true })
-
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-W>j", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-W>k", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-W>l", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-W>h", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "j", "gj", { noremap = true })
 vim.api.nvim_set_keymap("n", "k", "gk", { noremap = true })
