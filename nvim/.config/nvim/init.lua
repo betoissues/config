@@ -225,40 +225,26 @@ local plugins = {
         },
     },
     {
-        "rebelot/kanagawa.nvim",
-        opts = {
-            colors = {
-                palette = {
-                    lotusInk1 = "#222222",
-                    lotusWhite3 = "#EEEEEE"
-                },
-                theme = {
-                    all = {
-                        ui = {
-                            bg_gutter = "none"
-                        }
-                    }
-                }
-            },
-            overrides = function(colors)
-                local theme = colors.theme
-                return {
-                    NormalFloat = { bg = "none" },
-                    FloatBorder = { bg = "none" },
-                    FloatTitle = { bg = "none" },
-
-                    -- Save an hlgroup with dark background and dimmed foreground
-                    -- so that you can use it where your still want darker windows.
-                    -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
-                    NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-
-                    -- Popular plugins that open floats will link to NormalFloat by default;
-                    -- set their background accordingly if you wish to keep them dark and borderless
-                    LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-                    MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-                }
-            end,
-        }
+        "aktersnurra/no-clown-fiesta.nvim",
+    },
+    {
+        "aditya-azad/candle-grey",
+    },
+    {
+        "zenbones-theme/zenbones.nvim",
+        -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+        -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+        -- In Vim, compat mode is turned on as Lush only works in Neovim.
+        dependencies = "rktjmp/lush.nvim",
+        lazy = false,
+        priority = 1000,
+        -- you can set set configuration options here
+        config = function()
+            vim.g.zenbones_darken_comments = 45
+            vim.g.zenbones_darkness = 'stark'
+            vim.g.zenbones_transparent_background = true
+            vim.cmd.colorscheme('zenbones')
+        end
     }
 }
 
@@ -415,7 +401,6 @@ require('nvim-treesitter.configs').setup {
 }
 
 vim.cmd 'syntax on'
-vim.cmd 'colorscheme kanagawa-dragon'
 vim.cmd 'highlight ColorColumn ctermbg=241'
 vim.cmd 'filetype plugin indent on'
 
@@ -458,7 +443,7 @@ vim.opt.formatoptions:append({ q = true }) -- enable formatting of comments with
 vim.opt.formatoptions:append({ n = true }) -- detect lists for formatting
 vim.opt.formatoptions:append({ b = true }) -- auto-wrap in insert mode, and do not wrap old long
 
--- vim.opt.background = "light"
+vim.opt.background = "dark"
 vim.opt.timeoutlen = 250
 vim.opt.showmode = false
 vim.opt.switchbuf = "useopen"

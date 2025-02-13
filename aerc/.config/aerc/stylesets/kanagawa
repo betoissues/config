@@ -1,6 +1,6 @@
 *.default=true
 
-default.bg=#111111
+default.bg=#050505
 
 title.reverse=true
 header.bold=true
