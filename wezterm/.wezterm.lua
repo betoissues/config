@@ -13,7 +13,7 @@ config.font_rules = {
   {
     intensity = 'Bold',
     italic = false,
-    font = wezterm.font("Iosevka Nerd Font", {weight="ExtraBold", stretch="Normal", style="Normal"}) 
+    font = wezterm.font("Iosevka Nerd Font", {weight="ExtraBold", stretch="Normal", style="Normal"})
   },
   {
     intensity = 'Bold',

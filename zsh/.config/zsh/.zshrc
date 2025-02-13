@@ -22,7 +22,7 @@ setopt hist_find_no_dups
 LSCOLORS="Gxfxcxdxbxegedabagacad"
 export NVM_DIR="$HOME/.nvm"
 
-source /opt/homebrew/share/antigen/antigen.zsh
+source /usr/share/zsh/share/antigen.zsh
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle Tarrasch/zsh-autoenv
@@ -71,16 +71,10 @@ alias bwp="getpw password"
 alias bwu="getpw user"
 alias bwc="getpw code"
 
-#source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
 eval "$(zoxide init --cmd cd zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH="$(brew --prefix)/bin:$(brew --prefix)/opt/python@3.11/libexec/bin:$PATH"
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$HOME/.local/bin:$HOME/.cargo/bin
-export PATH="/opt/homebrew/opt/mysql-client@8.4/bin:$PATH"
-
-export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"

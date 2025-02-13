@@ -124,6 +124,7 @@ shift + alt - 2 : yabai -m window --space  2
 shift + alt - 3 : yabai -m window --space  3
 shift + alt - 4 : yabai -m window --space  4
 shift + alt - 5 : yabai -m window --space  5
+shift + alt - 6 : yabai -m window --space  6
 
 # focus monitor
 alt - z : yabai -m display --focus west
@@ -151,7 +152,7 @@ shift + cmd - w : yabai -m window --resize top:0:20
 # ctrl + alt - h : yabai -m window --insert west
 
 # toggle window zoom
-# alt - d : yabai -m window --toggle zoom-parent
+alt - d : yabai -m window --toggle zoom-parent
 alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
