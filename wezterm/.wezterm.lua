@@ -4,28 +4,29 @@ local wezterm = require 'wezterm'
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
-config.font = wezterm.font("JetBrainsMono Nerd Font")
-config.font_size = 14
+config.font = wezterm.font("Iosevka Nerd Font")
+config.window_background_opacity = 0.97
+config.font_size = 15
 config.enable_tab_bar = false
 config.send_composed_key_when_left_alt_is_pressed = true
 config.font_rules = {
   {
     intensity = 'Bold',
     italic = false,
-    font = wezterm.font("JetBrainsMono Nerd Font", {weight="ExtraBold", stretch="Normal", style="Normal"}) 
+    font = wezterm.font("Iosevka Nerd Font", {weight="ExtraBold", stretch="Normal", style="Normal"})
   },
   {
     intensity = 'Bold',
     italic = true,
-    font = wezterm.font("JetBrainsMono Nerd Font", {weight="ExtraBold", stretch="Normal", style="Italic"})
+    font = wezterm.font("Iosevka Nerd Font", {weight="ExtraBold", stretch="Normal", style="Italic"})
   },
 }
 
 config.force_reverse_video_cursor = true
 
-local dark_theme = wezterm.color.get_builtin_schemes()['Kanagawa Dragon (Gogh)']
+local dark_theme = wezterm.color.get_builtin_schemes()['Afterglow']
 dark_theme.foreground = "#f0f0f0"
-dark_theme.background = "#111111"
+dark_theme.background = "#050505"
 
 local light_theme = {
     background = "#F0F0F0",
@@ -103,7 +104,7 @@ local light_theme = {
 
 
 config.color_schemes = {
-    ['Kanagawa Dark'] = dark_theme,
+    ['Dark Theme'] = dark_theme,
     ['Kanagawa Light'] = light_theme,
 }
 
@@ -116,7 +117,7 @@ end
 
 function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
-    return 'Kanagawa Dark'
+    return 'Dark Theme'
   else
     return 'Kanagawa Light'
   end

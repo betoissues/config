@@ -3,5 +3,17 @@
 source ~/.zprofile
 
 filename=/tmp/tmp_image.jpg
+os="$(uname -s)"
 
-screencapture -i $filename && curl -F "file=@$filename" -H "Authorization: $RPASTE_KEY" https://paste.nixden.net | pbcopy
+case "${os}" in
+	Linux*)
+		grim -g "$(slurp $SLURP_ARGS)" $filename && curl -F "file=@$filename" -H "Authorization: $RPASTE_KEY" https://paste.nixden.net | wl-copy
+	;;
+	Darwin*)
+		screencapture -i $filename && curl -F "file=@$filename" -H "Authorization: $RPASTE_KEY" https://paste.nixden.net | pbcopy
+	;;
+	*)
+		exit 1
+	;;
+esac
+
